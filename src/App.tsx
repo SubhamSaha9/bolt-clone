@@ -1,14 +1,17 @@
-import { Button } from "./components/ui/button";
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import WorkSpace from "./pages/WorkSpace";
+import Header from "./components/common/Header";
+import Subscription from "./pages/Subscription";
 function App() {
   return (
-    <div className="h-screen">
-      <Button variant="outline">jello</Button>
-      <div className="">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia,
-        architecto. Optio omnis modi doloribus quae, quod doloremque! Alias,
-        saepe dignissimos enim repellat suscipit, asperiores quam officiis,
-        quaerat optio ut sapiente?
-      </div>
+    <div>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/workspace/:workId" element={<WorkSpace />} />
+        <Route path="/subscription" element={<Subscription />} />
+      </Routes>
     </div>
   );
 }
