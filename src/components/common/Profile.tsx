@@ -105,7 +105,11 @@ const Profile = () => {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() =>
+            window.open("https://github.com/subhamsaha9", "_blank")
+          }
+        >
           <Github />
           <span>GitHub</span>
         </DropdownMenuItem>

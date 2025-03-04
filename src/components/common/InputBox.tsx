@@ -15,6 +15,7 @@ import { SideBarFooter } from "../../utils/Constant";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenSheet } from "../../slice/actionSlice";
 import Profile from "./Profile";
+import { useNavigate } from "react-router-dom";
 
 const InputBox = ({
   userInput,
@@ -26,6 +27,7 @@ const InputBox = ({
   generateRes: any;
 }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { openSheet } = useSelector((state: any) => state.action);
   const { token } = useSelector((state: any) => state.auth);
 
@@ -80,6 +82,7 @@ from-[rgba(46,_9,_255,_0.2)] flex flex-col justify-between"
                   key={index}
                   className="w-full flex items-center justify-start gap-2"
                   variant={"ghost"}
+                  onClick={() => navigate(item.path)}
                 >
                   <item.icon /> {item.name}
                 </Button>
