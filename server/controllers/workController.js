@@ -98,6 +98,40 @@ exports.updateWorkSpace = async (req, res) => {
     }
 }
 
+exports.deleteWorkSpace = async (req, res) => {
+    try {
+        const { workId } = req.body;
+        if (!workId) {
+            return res.status(401).json({
+                success: false,
+                message: "All fields are required."
+            })
+        }
+        const uid = new mongoose.Types.ObjectId(req.user.id);
+        let workspace = await Workspace.findOne({ _id: workId, user: uid });
+        if (!workspace) {
+            return res.status(404).json({
+                success: false,
+                message: "You are not the owner of these files."
+            })
+        }
+
+        await Workspace.findByIdAndDelete(workId);
+
+        return res.status(200).json({
+            success: true,
+            message: "Data deleted successfully.",
+        })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
 exports.getAllWorkSpaces = async (req, res) => {
     try {
 

@@ -5,8 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { verifyToken } from "../../lib/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../slice/authSlice";
-import { EllipsisVertical, Loader2Icon } from "lucide-react";
+import { EllipsisVertical, Loader2Icon, Trash } from "lucide-react";
 import { setOpenSheet } from "../../slice/actionSlice";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -14,7 +21,7 @@ const WorkHistory = () => {
   const { token } = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [workSpaceList, setWorkSpaceList] = useState<[]>([]);
+  const [workSpaceList, setWorkSpaceList] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchWorkSpaceList = async () => {
@@ -39,6 +46,32 @@ const WorkHistory = () => {
       }
     }
     setLoading(false);
+  };
+
+  const deleteWorkSpace = async (workId: any) => {
+    try {
+      const { data } = await axios.post(
+        `${BASE_URL}/work-space/delete`,
+        { workId },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (!data.success) {
+        toast.error(data.message);
+        return;
+      }
+
+      toast.success(data.message);
+      const updatedList = workSpaceList.filter(
+        (workspace: any) => workspace?._id !== workId
+      );
+      setWorkSpaceList(updatedList);
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.response?.data.message || error?.message);
+    }
   };
 
   useEffect(() => {
@@ -66,7 +99,19 @@ const WorkHistory = () => {
                 <div className="line-clamp-1">
                   {JSON.parse(workSpace?.chats)[0].content}
                 </div>
-                <EllipsisVertical />
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <EllipsisVertical />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-40">
+                    <DropdownMenuLabel>Action</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <div className="flex items-center gap-3">
+                      <Trash onClick={() => deleteWorkSpace(workSpace?._id)} />
+                      Delete
+                    </div>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </Link>
           ))
