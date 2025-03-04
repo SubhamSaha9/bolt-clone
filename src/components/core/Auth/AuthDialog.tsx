@@ -1,6 +1,6 @@
 import { useGoogleLogin } from "@react-oauth/google";
-import Lookup from "../../utils/Lookup";
-import { Button } from "../ui/button";
+import Lookup from "../../../utils/Lookup";
+import { Button } from "../../ui/button";
 import axios from "axios";
 import {
   Dialog,
@@ -8,10 +8,10 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "../ui/dialog";
+} from "../../ui/dialog";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { setOpenDialog, setToken, setUser } from "../../slice/authSlice";
+import { setOpenDialog, setToken, setUser } from "../../../slice/authSlice";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 

@@ -1,7 +1,7 @@
 import Lookup from "../utils/Lookup";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AuthDialog from "../components/core/AuthDialog";
+import AuthDialog from "../components/core/Auth/AuthDialog";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
