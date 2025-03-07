@@ -8,7 +8,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   if (token !== null) {
     return children;
   } else {
-    return <Navigate to={"/login"} />;
+    return <Navigate to={"/"} />;
   }
 };
 

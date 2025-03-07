@@ -23,6 +23,7 @@ const WorkHistory = () => {
   const navigate = useNavigate();
   const [workSpaceList, setWorkSpaceList] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   const fetchWorkSpaceList = async () => {
     setLoading(true);
@@ -62,7 +63,7 @@ const WorkHistory = () => {
         toast.error(data.message);
         return;
       }
-
+      setOpenDialog(false);
       toast.success(data.message);
       const updatedList = workSpaceList.filter(
         (workspace: any) => workspace?._id !== workId
@@ -99,18 +100,30 @@ const WorkHistory = () => {
                 <div className="line-clamp-1">
                   {JSON.parse(workSpace?.chats)[0].content}
                 </div>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
+                <DropdownMenu onOpenChange={(v) => setOpenDialog(v)}>
+                  <DropdownMenuTrigger
+                    asChild
+                    onClick={(e) => e.stopPropagation()}
+                    className="w-4"
+                  >
                     <EllipsisVertical />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-40">
-                    <DropdownMenuLabel>Action</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <div className="flex items-center gap-3">
-                      <Trash onClick={() => deleteWorkSpace(workSpace?._id)} />
-                      Delete
-                    </div>
-                  </DropdownMenuContent>
+                  {openDialog && (
+                    <DropdownMenuContent
+                      className="w-40"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <DropdownMenuLabel>Action</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <div
+                        className="flex items-center gap-2 px-2 py-1 cursor-pointer hover:bg-gray-800 rounded opacity-85 hover:opacity-100"
+                        onClick={() => deleteWorkSpace(workSpace?._id)}
+                      >
+                        <Trash className="w-4 text-red-600" />
+                        Delete
+                      </div>
+                    </DropdownMenuContent>
+                  )}
                 </DropdownMenu>
               </div>
             </Link>
