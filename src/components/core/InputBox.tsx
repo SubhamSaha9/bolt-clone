@@ -71,7 +71,7 @@ const InputBox = ({
             title="Upload Image"
             className="group flex gap-1 items-start w-10 hover:bg-gray-800 hover:rounded-full hover:w-32 px-2 py-1 transition-all delay-75 cursor-pointer"
           >
-            <ImagePlusIcon className="h-5 w-5 ml-1 opacity-75 group-hover:opacity-100" />
+            <ImagePlusIcon className="min-h-5 min-w-5 max-h-5 max-w-5 ml-1 opacity-75 group-hover:opacity-100" />
             <span className="hidden text-sm group-hover:block line-clamp-1 text-nowrap">
               Select Image
             </span>
