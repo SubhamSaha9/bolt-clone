@@ -81,7 +81,7 @@ const CodeView = () => {
   }, [messages]);
 
   useEffect(() => {
-    setActiveTab("preview");
+    navAction && setActiveTab("preview");
   }, [navAction]);
 
   return (

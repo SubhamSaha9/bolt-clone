@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { setFiles, setMessages } from "../slice/messageSlice";
 import { logout, setOpenDialog } from "../slice/authSlice";
 import { verifyToken } from "../lib/utils";
-import InputBox from "../components/common/InputBox";
+import InputBox from "../components/core/InputBox";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 

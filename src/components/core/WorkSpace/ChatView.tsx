@@ -11,7 +11,7 @@ import Prompt from "../../../utils/Prompt";
 import { aiChatSession } from "../../../utils/AiModel";
 import { countToken, verifyToken } from "../../../lib/utils";
 import { logout } from "../../../slice/authSlice";
-import InputBox from "../../common/InputBox";
+import InputBox from "../InputBox";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const ChatView = () => {

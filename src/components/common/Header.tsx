@@ -5,7 +5,8 @@ import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenDialog } from "../../slice/authSlice";
 import { Download, Rocket } from "lucide-react";
-import { setNavAction, setOpenSheet } from "../../slice/actionSlice";
+import { setNavAction } from "../../slice/actionSlice";
+import Sidebar from "./Sidebar";
 const Header = () => {
   const dispatch = useDispatch();
   const { token, user } = useSelector((state: any) => state.auth);
@@ -48,18 +49,15 @@ to-black from-[rgba(46,_9,_255,_0.2)]"
               </Button>
             </div>
           )}
-          <Button
-            className="rounded-full w-8 h-8 p-0 cursor-pointer"
-            onClick={() => dispatch(setOpenSheet(true))}
-          >
+          <Sidebar>
             <img
               src={user?.image}
               alt="user"
               height={40}
               width={40}
-              className="rounded-full"
+              className="rounded-full w-8 h-8 p-0 cursor-pointer"
             />
-          </Button>
+          </Sidebar>
         </div>
       ) : (
         <div className="flex gap-5 items-center">
