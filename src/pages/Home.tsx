@@ -17,6 +17,7 @@ const Home = () => {
   const navigate = useNavigate();
   const { token, user } = useSelector((state: any) => state.auth);
   const [userInput, setUserInput] = useState<string>("");
+  const [imageFile, setImageFile] = useState<any>(null);
 
   const onGenerate = async (input: string) => {
     if (!token) {
@@ -29,15 +30,21 @@ const Home = () => {
       navigate("/subscription");
       return;
     }
-
+    const toastId = toast.loading("Generating files...");
     try {
       const msg = {
         role: "user",
         content: input,
       };
+      const formData = new FormData();
+      formData.append("chats", JSON.stringify([msg]));
+
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
       const { data } = await axios.post(
         `${BASE_URL}/work-space/create`,
-        { chats: JSON.stringify([msg]) },
+        formData,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -47,7 +54,8 @@ const Home = () => {
         toast.error(data.message);
         return;
       }
-
+      setImageFile(null);
+      setUserInput("");
       dispatch(setMessages([msg]));
       navigate("/workspace/" + data.data._id);
       toast.success(data.message);
@@ -59,6 +67,7 @@ const Home = () => {
         dispatch(logout());
       }
     }
+    toast.dismiss(toastId);
   };
 
   useEffect(() => {
@@ -75,6 +84,9 @@ const Home = () => {
           generateRes={onGenerate}
           userInput={userInput}
           setUserInput={setUserInput}
+          location="home"
+          setImageFile={setImageFile}
+          imageFile={imageFile}
         />
 
         <div className="mt-8 flex flex-wrap max-w-xl items-center justify-center gap-3">

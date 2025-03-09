@@ -9,6 +9,7 @@ const workRoute = require("./routes/work");
 const paymentRoutes = require("./routes/payments");
 const { connect } = require("./config/database");
 const { cloudinaryConnect } = require("./config/cloudinary");
+const fileUpload = require("express-fileupload");
 
 app.use(express.json());
 
@@ -18,6 +19,12 @@ app.use(
     cors({
         origin: process.env.ORIGIN,
         credentials: true,
+    })
+);
+app.use(
+    fileUpload({
+        useTempFiles: true,
+        tempFileDir: "/tmp/",
     })
 );
 

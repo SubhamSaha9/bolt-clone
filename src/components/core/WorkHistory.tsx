@@ -79,9 +79,9 @@ const WorkHistory = () => {
     token && fetchWorkSpaceList();
   }, [token]);
   return (
-    <div>
+    <div className="">
       <h2 className="font-medium text-lg px-2">Your Chats</h2>
-      <div className="">
+      <div className="overflow-auto h-[390px] no-scrollbar">
         {loading ? (
           <div className="flex items-center justify-center mt-5">
             <Loader2Icon className="animate-spin h-5 w-5" /> Loading Content...

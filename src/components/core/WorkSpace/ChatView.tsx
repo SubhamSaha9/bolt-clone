@@ -158,6 +158,9 @@ const ChatView = () => {
         userInput={userInput}
         setUserInput={setUserInput}
         generateRes={generateRes}
+        setImageFile={() => {}}
+        location="workspace"
+        imageFile={null}
       />
     </div>
   );

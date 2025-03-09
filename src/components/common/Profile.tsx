@@ -40,7 +40,7 @@ const Profile = () => {
   };
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild className="">
         <div className="flex gap-2 bg-gray-900 hover:bg-gray-800 shadow-sm p-2 rounded cursor-pointer border">
           <img src={user.image} alt="profile" className="rounded h-8" />
           <div className="flex flex-col items-start justify-center text-xs">

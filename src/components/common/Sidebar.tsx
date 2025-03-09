@@ -55,7 +55,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
           <WorkHistory />
         </div>
         {token && (
-          <div className="sticky">
+          <div className="">
             {SideBarFooter.map((item, index) => (
               <Button
                 key={index}
@@ -69,6 +69,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
             <Profile />
           </div>
         )}
+        <br />
       </SheetContent>
     </Sheet>
   );
