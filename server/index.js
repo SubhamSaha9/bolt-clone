@@ -8,10 +8,12 @@ const authRoute = require("./routes/user");
 const workRoute = require("./routes/work");
 const paymentRoutes = require("./routes/payments");
 const { connect } = require("./config/database");
+const { cloudinaryConnect } = require("./config/cloudinary");
 
 app.use(express.json());
 
-connect()
+connect();
+cloudinaryConnect();
 app.use(
     cors({
         origin: process.env.ORIGIN,

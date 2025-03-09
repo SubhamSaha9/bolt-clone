@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Workspace = require("../models/workspace");
+const { uploadImageToCloudinary } = require("../utils/imageUploader");
 
 exports.createWorkSpace = async (req, res) => {
     try {
@@ -149,6 +150,26 @@ exports.getAllWorkSpaces = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: error.message
+        })
+    }
+}
+
+exports.uploadPicture = async (req, res) => {
+    try {
+        const picture = req.files.image;
+        const image = await uploadImageToCloudinary(picture, process.env.FOLDER_NAME, 1000, 1000);
+
+        return res.status(200).json({
+            success: true,
+            message: "WireFrame Image uploaded successfully.",
+            data: image.secure_url
+        })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: error.message,
         })
     }
 }
