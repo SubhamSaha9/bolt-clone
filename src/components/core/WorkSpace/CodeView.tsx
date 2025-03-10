@@ -32,12 +32,18 @@ const CodeView = () => {
 
   const generateAiCode = async () => {
     const jsonMsg = JSON.stringify(messages);
-    const PROMPT =
-      JSON.stringify(messages) +
-      " " +
-      (jsonMsg.includes("image_url")
-        ? Prompt.CODE_GEN_IMAGE_PROMPT
-        : Prompt.CODE_GEN_PROMPT);
+    let PROMPT;
+    if (jsonMsg.includes("image_url")) {
+      const filteredMsg = messages.filter((msg: any) => msg.role === "user");
+      PROMPT =
+        JSON.stringify(filteredMsg[filteredMsg.length - 1]) +
+        "\n" +
+        Prompt.CODE_GEN_IMAGE_PROMPT;
+    } else {
+      PROMPT = JSON.stringify(messages) + " " + Prompt.CODE_GEN_PROMPT;
+    }
+
+    console.log(PROMPT);
     setLoading(true);
     try {
       const { response } = await aiCodeSession.sendMessage(PROMPT);

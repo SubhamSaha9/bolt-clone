@@ -81,7 +81,7 @@ files:{
 - Use stock photos from unsplash where appropriate, only valid URLs you know exist. Do not download the images, only link to them in image tags.
    `,
 
-   CODE_GEN_IMAGE_PROMPT: dedent`
+   OLD_PROMPT: dedent`
     You are an expert frontend frontend React developer. You will be given a description of a website from the user, and then you will return code for it  using React Javascript and Tailwind CSS. Follow the instructions carefully, it is very important for my job. I will tip you $1 million if you do a good job:
 
 - Think carefully step by step about how to recreate the UI described in the prompt.
@@ -117,7 +117,7 @@ files:{
   "generatedFiles": []
 } 
 - DO NOT START WITH \\\jsx or \\\`typescript or \\\`javascript or \\\`tsx or \\\.`,
-  PROMPT: dedent`:You are a professtional react developer and UI/UX designer
+  CODE_GEN_IMAGE_PROMPT: dedent`:You are a professtional react developer and UI/UX designer
 - based on provider wireframe image, make sure to generate similar web page
 - and Depends on the description write a react and tailwindcss code 
 - Make sure to add Header and Footer with proper option as metioned in wireframe if Not then add option releated to description
@@ -128,6 +128,18 @@ files:{
 - Use lucid library for icons
 - Do not use any third party library
 - Only give react+ tailwindcss code and do not write any text other than code
+- Return the response in JSON format with the following schema:
+  {
+    "projectTitle": "",
+    "explanation": "",
+    "files": {
+      "/App.js": {
+        "code": ""
+      },
+      ...
+    },
+    "generatedFiles": []
+  } 
 `,
 
   DEPENDANCY: {

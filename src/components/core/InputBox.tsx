@@ -1,7 +1,7 @@
 import { ArrowRight, ImagePlusIcon, X } from "lucide-react";
 import Lookup from "../../utils/Lookup";
 import { Button } from "../ui/button";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent } from "react";
 
 const InputBox = ({
   userInput,
@@ -45,7 +45,7 @@ const InputBox = ({
         <Button
           className="bg-blue-500 text-gray-200 hover:bg-blue-600 hover:text-white p-2
               rounded-md cursor-pointer w-8"
-          disabled={userInput.split(" ").length < 3}
+          disabled={userInput.split(" ").length < 2}
           onClick={() => generateRes(userInput)}
         >
           <ArrowRight className=" h-8 w-8" />

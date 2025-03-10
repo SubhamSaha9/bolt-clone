@@ -30,7 +30,7 @@ const Home = () => {
       navigate("/subscription");
       return;
     }
-    const toastId = toast.loading("Generating files...");
+    const toastId = toast.loading("creating workspace...");
     try {
       const formData = new FormData();
 

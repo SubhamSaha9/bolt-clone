@@ -134,9 +134,18 @@ const ChatView = () => {
               />
             )}
             <div className="flex flex-col flex-wrap overflow-hidden">
+              {msg.role === "ai" &&
+                msg.content.includes("https://res.cloudinary.com") &&
+                i === 1 && (
+                  <img
+                    src={msg?.content?.split(/(https?:\/\/[^\s]+)/)[1]?.trim()}
+                    alt="wireframe"
+                    className="rounded-t-md mb-2"
+                  />
+                )}
               <Markdown>
                 {typeof msg.content === "string"
-                  ? msg.content
+                  ? msg.content.split(/(https?:\/\/[^\s]+)/)[0]?.trim()
                   : msg.content[0]?.text}
               </Markdown>
             </div>
