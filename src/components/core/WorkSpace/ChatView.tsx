@@ -134,7 +134,11 @@ const ChatView = () => {
               />
             )}
             <div className="flex flex-col flex-wrap overflow-hidden">
-              <Markdown>{msg.content}</Markdown>
+              <Markdown>
+                {typeof msg.content === "string"
+                  ? msg.content
+                  : msg.content[0]?.text}
+              </Markdown>
             </div>
           </div>
         ))}

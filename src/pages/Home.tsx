@@ -32,16 +32,34 @@ const Home = () => {
     }
     const toastId = toast.loading("Generating files...");
     try {
-      const msg = {
+      const formData = new FormData();
+
+      let msg: {
+        role: string;
+        content:
+          | string
+          | { type: string; text?: string; image_url?: { url: string } }[];
+      } = {
         role: "user",
         content: input,
       };
-      const formData = new FormData();
-      formData.append("chats", JSON.stringify([msg]));
-
       if (imageFile) {
         formData.append("image", imageFile);
+        msg.content = [
+          {
+            type: "text",
+            text: input,
+          },
+          {
+            type: "image_url",
+            image_url: {
+              url: "imageUrl",
+            },
+          },
+        ];
       }
+      formData.append("chats", JSON.stringify([msg]));
+
       const { data } = await axios.post(
         `${BASE_URL}/work-space/create`,
         formData,

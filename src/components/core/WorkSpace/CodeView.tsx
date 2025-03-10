@@ -31,7 +31,13 @@ const CodeView = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const generateAiCode = async () => {
-    const PROMPT = JSON.stringify(messages) + " " + Prompt.CODE_GEN_PROMPT;
+    const jsonMsg = JSON.stringify(messages);
+    const PROMPT =
+      JSON.stringify(messages) +
+      " " +
+      (jsonMsg.includes("image_url")
+        ? Prompt.CODE_GEN_IMAGE_PROMPT
+        : Prompt.CODE_GEN_PROMPT);
     setLoading(true);
     try {
       const { response } = await aiCodeSession.sendMessage(PROMPT);
@@ -39,6 +45,7 @@ const CodeView = () => {
         toast.error("Failed to generate code");
         return;
       }
+      console.log(response?.text());
       toast.success("Code generated successfully");
       const resp = JSON.parse(response?.text());
       const content = resp?.files;

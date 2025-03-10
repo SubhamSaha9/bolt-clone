@@ -50,6 +50,7 @@ const WorkHistory = () => {
   };
 
   const deleteWorkSpace = async (workId: any) => {
+    const toastId = toast.loading("Deleting workspace...");
     try {
       const { data } = await axios.post(
         `${BASE_URL}/work-space/delete`,
@@ -73,6 +74,7 @@ const WorkHistory = () => {
       console.log(error);
       toast.error(error?.response?.data.message || error?.message);
     }
+    toast.dismiss(toastId);
   };
 
   useEffect(() => {
@@ -87,47 +89,56 @@ const WorkHistory = () => {
             <Loader2Icon className="animate-spin h-5 w-5" /> Loading Content...
           </div>
         ) : workSpaceList?.length > 0 ? (
-          workSpaceList?.map((workSpace: any, i: number) => (
-            <Link
-              to={`/workspace/${workSpace?._id}`}
-              key={i}
-              onClick={() => dispatch(setOpenSheet(false))}
-            >
-              <div
-                className="flex items-center justify-between  text-sm text-gray-400 py-2 px-4 rounded-md bg-gray-800 font-light mt-2 hover:text-white hover:bg-gray-600 cursor-pointer"
-                title={JSON.parse(workSpace?.chats)[0].content}
+          workSpaceList?.map((workSpace: any, i: number) => {
+            const chat = JSON.parse(workSpace?.chats)[0];
+            return (
+              <Link
+                to={`/workspace/${workSpace?._id}`}
+                key={i}
+                onClick={() => dispatch(setOpenSheet(false))}
               >
-                <div className="line-clamp-1">
-                  {JSON.parse(workSpace?.chats)[0].content}
-                </div>
-                <DropdownMenu onOpenChange={(v) => setOpenDialog(v)}>
-                  <DropdownMenuTrigger
-                    asChild
-                    onClick={(e) => e.stopPropagation()}
-                    className="w-4"
-                  >
-                    <EllipsisVertical />
-                  </DropdownMenuTrigger>
-                  {openDialog && (
-                    <DropdownMenuContent
-                      className="w-40"
+                <div
+                  className="flex items-center justify-between  text-sm text-gray-400 py-2 px-4 rounded-md bg-gray-800 font-light mt-2 hover:text-white hover:bg-gray-600 cursor-pointer"
+                  title={
+                    typeof chat.content === "string"
+                      ? chat.content
+                      : chat.content[0]?.text
+                  }
+                >
+                  <div className="line-clamp-1">
+                    {typeof chat.content === "string"
+                      ? chat.content
+                      : chat.content[0]?.text}
+                  </div>
+                  <DropdownMenu onOpenChange={(v) => setOpenDialog(v)}>
+                    <DropdownMenuTrigger
+                      asChild
                       onClick={(e) => e.stopPropagation()}
+                      className="w-4"
                     >
-                      <DropdownMenuLabel>Action</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <div
-                        className="flex items-center gap-2 px-2 py-1 cursor-pointer hover:bg-gray-800 rounded opacity-85 hover:opacity-100"
-                        onClick={() => deleteWorkSpace(workSpace?._id)}
+                      <EllipsisVertical />
+                    </DropdownMenuTrigger>
+                    {openDialog && (
+                      <DropdownMenuContent
+                        className="w-40"
+                        onClick={(e) => e.stopPropagation()}
                       >
-                        <Trash className="w-4 text-red-600" />
-                        Delete
-                      </div>
-                    </DropdownMenuContent>
-                  )}
-                </DropdownMenu>
-              </div>
-            </Link>
-          ))
+                        <DropdownMenuLabel>Action</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <div
+                          className="flex items-center gap-2 px-2 py-1 cursor-pointer hover:bg-gray-800 rounded opacity-85 hover:opacity-100"
+                          onClick={() => deleteWorkSpace(workSpace?._id)}
+                        >
+                          <Trash className="w-4 text-red-600" />
+                          Delete
+                        </div>
+                      </DropdownMenuContent>
+                    )}
+                  </DropdownMenu>
+                </div>
+              </Link>
+            );
+          })
         ) : (
           <div className="text-gray-400 text-sm font-light text-center mt-6">
             No chats found

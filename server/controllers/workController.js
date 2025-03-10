@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 const Workspace = require("../models/workspace");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
+const { deleteImageFromCloudinary } = require("../utils/imagedestroyer");
 
 exports.createWorkSpace = async (req, res) => {
     try {
-        const { chats } = req.body;
+        let { chats } = req.body;
         if (!chats) {
             return res.status(401).json({
                 success: false,
@@ -12,16 +13,17 @@ exports.createWorkSpace = async (req, res) => {
             })
         }
 
-        const picture = req.files.image;
+        const picture = req.files?.image;
         let image;
         if (picture) {
             image = await uploadImageToCloudinary(picture, process.env.FOLDER_NAME, 1000);
+            chats = chats.replace("imageUrl", image.secure_url);
         }
 
         const workSpace = await Workspace.create({
             chats: chats,
             user: req.user.id,
-            image: image.secure_url,
+            image: image && image.secure_url,
         })
 
         return res.status(200).json({
@@ -124,6 +126,9 @@ exports.deleteWorkSpace = async (req, res) => {
             })
         }
 
+        if (workspace.image) {
+            await deleteImageFromCloudinary(workspace.image);
+        }
         await Workspace.findByIdAndDelete(workId);
 
         return res.status(200).json({
