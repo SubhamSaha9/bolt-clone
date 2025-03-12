@@ -14,22 +14,18 @@ exports.capturePayment = async (req, res) => {
         });
     }
 
-    let tokens, amount;
+    let amount;
     switch (creditType) {
         case 'Basic':
-            tokens = 50000;
             amount = 4.99;
             break;
         case 'Starter':
-            tokens = 120000;
             amount = 9.99;
             break;
         case 'Pro':
-            tokens = 2500000;
             amount = 19.99;
             break;
         case 'Unlimted (License)':
-            tokens = 2500000;
             amount = 19.99;
             break;
         default:

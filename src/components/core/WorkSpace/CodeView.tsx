@@ -61,14 +61,14 @@ const CodeView = () => {
       await axios.post(
         `${BASE_URL}/work-space/update`,
         { workId, files: JSON.stringify(content), type: "file" },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { withCredentials: true, headers: { Authorization: `Bearer ${token}` } }
       );
 
       const aiToken = countToken(JSON.stringify(content));
       const { data } = await axios.post(
         `${BASE_URL}/auth/update-token`,
         { AItoken: aiToken },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { withCredentials: true, headers: { Authorization: `Bearer ${token}` } }
       );
 
       dispatch(setUser(data?.data));

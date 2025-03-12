@@ -32,7 +32,6 @@ exports.createWorkSpace = async (req, res) => {
             data: workSpace
         })
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             success: false,
             message: error.message
@@ -59,7 +58,6 @@ exports.getWorkSpace = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             success: false,
             message: error.message
@@ -100,7 +98,6 @@ exports.updateWorkSpace = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             success: false,
             message: error.message
@@ -137,7 +134,6 @@ exports.deleteWorkSpace = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             success: false,
             message: error.message
@@ -158,7 +154,6 @@ exports.getAllWorkSpaces = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             success: false,
             message: error.message

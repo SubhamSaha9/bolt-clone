@@ -58,7 +58,6 @@ exports.googleAuth = async (req, res) => {
             token
         });
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             success: false,
             message: error.message
@@ -85,7 +84,6 @@ exports.updateToken = async (req, res) => {
             data: user
         })
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             success: false,
             message: error.message
