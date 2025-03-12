@@ -28,6 +28,7 @@ const SandPackPreview = () => {
   const getSandPackClient = async () => {
     const client = previewRef.current?.getClient();
     if (client) {
+      // @ts-ignore
       const result = await client?.getCodeSandboxURL();
       if (navAction?.type === "deploy") {
         setOpen(true);

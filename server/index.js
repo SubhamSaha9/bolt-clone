@@ -12,6 +12,7 @@ const { cloudinaryConnect } = require("./config/cloudinary");
 const fileUpload = require("express-fileupload");
 
 app.use(express.json());
+app.use(cookieParser());
 
 connect();
 cloudinaryConnect();
